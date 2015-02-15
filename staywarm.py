@@ -39,6 +39,7 @@ def run():
 	
 	time.sleep(60)
         on_time += 1
+    print "Maximum specified heater timeout has been reached, exiting." 
 
 def check_pid(pid):        
     try:
