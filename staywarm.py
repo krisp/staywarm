@@ -9,10 +9,12 @@ from threading import Thread
 apiurl = "http://octoprint:5000/api"
 apikey = "EA1354A4D39E475D86A62E07C00A146E"
 pidfile = "/tmp/staywarm.pid"
+max_on_time = "60" # minutes
 
 # thread
 def run():
-    while True:
+    on_time = 0
+    while on_time < max_on_time:
 	# get temps
 	uri = apiurl + "/printer"
 	headers = { 'Content-type': 'application/json', 'X-Api-Key': apikey }
@@ -35,7 +37,8 @@ def run():
 	  body = { 'command': 'target', 'targets': { 'tool0': j['temps']['tool0']['target'] } }
 	  r = requests.post(uri, headers=headers, data=json.dumps(body))
 	
-	time.sleep(30)
+	time.sleep(60)
+        on_time += 1
 
 def check_pid(pid):        
     try:
