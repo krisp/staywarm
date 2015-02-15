@@ -1,0 +1,11 @@
+events:
+  enabled: true
+  subscriptions:
+  - command: python /path/to/staywarmstaywarm.py on
+    enabled: true
+    event: FileSelected
+    type: system
+  - command: python /path/to/staywarmstaywarm.py off
+    enabled: true
+    event: PrintStarted
+    type: system
