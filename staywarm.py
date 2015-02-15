@@ -45,20 +45,22 @@ def check_pid(pid):
     else:
         return True
 
-# check if we are already running, stop and exit if so (turn off)
-if os.path.isfile(pidfile):
+if __name__ == "__main__":
+# check if we are already running, stop running process and spawn a new one unless we are turning off
+ if os.path.isfile(pidfile):
   p = open(pidfile, "r")
   oldpid = p.readline()
   if check_pid(oldpid):
-    print "Staywarm is running, killing it."
+    print "found staywarm pid %s, killing it" % oldpid
     os.kill(int(oldpid), 9)
-    os.unlink(pidfile)
-    sys.exit()
-  os.unlink(pidfile)
+  os.unlink(pidfile) 
+ 
+ if len(sys.argv) > 1 and sys.argv[1] == "off": 
+   sys.exit()
 
 # fork into the background and keep setting the temp every 30 seconds (turn on)
-pid = os.fork()
-if(pid == 0):
+ pid = os.fork()
+ if(pid == 0):
   os.chdir("/")
   os.setsid()
   os.umask(0)
@@ -74,5 +76,5 @@ if(pid == 0):
     sys.exit()
   else:
     sys.exit()
-else:
+ else:
   sys.exit()
