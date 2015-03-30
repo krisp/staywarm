@@ -27,14 +27,14 @@ def run():
 	j = r.json()
 
 	# set target temp if there is one
-	if j['temps']['bed']['target'] is not None:
+	if j['temperature']['temps']['bed']['target'] is not None:
 	  uri = apiurl + "/printer/bed"
-	  body = { 'command': 'target', 'target': j['temps']['bed']['target'] }
+	  body = { 'command': 'target', 'target': j['temperature']['temps']['bed']['target'] }
 	  r = requests.post(uri, headers=headers, data=json.dumps(body))
 
-	if j['temps']['tool0']['target'] is not None:
+	if j['temperature']['temps']['tool0']['target'] is not None:
 	  uri = apiurl + "/printer/tool"
-	  body = { 'command': 'target', 'targets': { 'tool0': j['temps']['tool0']['target'] } }
+	  body = { 'command': 'target', 'targets': { 'tool0': j['temperature']['temps']['tool0']['target'] } }
 	  r = requests.post(uri, headers=headers, data=json.dumps(body))
 	
 	time.sleep(60)
